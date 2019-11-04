@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,14 @@
     <title>Document</title>
     <script src="./axios.js"></script>
 </head>
+
 <body>
     <script>
-        axios.interceptors.request.use((s) => {
-            console.log(s);
-        },
-        (s) => {
-            console.log(s);
-        });
-        let res = axios.get('https://getman.cn/echo').then((res) => {
-            console.log(res);
-        });
+        axios.all([axios.get('https://getman.cn/echo'), axios.get('https://getman.cn/echo')]).then(axios.spread(
+            function (response1, response2) {
+            // Both requests are now complete
+            }));
     </script>
 </body>
+
 </html>

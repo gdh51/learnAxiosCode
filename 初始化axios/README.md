@@ -40,9 +40,6 @@ axios.CancelToken = require('./cancel/CancelToken');
 axios.isCancel = require('./cancel/isCancel');
 
 // Expose all/spread
-axios.all = function all(promises) {
-    return Promise.all(promises);
-};
 axios.spread = require('./helpers/spread');
 
 module.exports = axios;
@@ -60,3 +57,37 @@ ___
 我们日常中发送请求无非是通过`axios()`或`axios.[method]()`这两种方式来发送请求，其实`axios.[method]()`就是基于`axios()`方法的封装，帮用户配置了默认的请求方法和一些参数而已。
 
 `axios()`即[`Axios.prototype.request()`](../初始化axios/Axios构造函数/README.md#axiosprototyperequest%e4%b8%87%e6%81%b6%e8%b5%b7%e6%ba%90%e8%af%b7%e6%b1%82%e5%87%bd%e6%95%b0)，通过它浏览器会自动根据当前的环境选择发送请求的方式，期间还要处理响应、请求拦截器，期间还要发送请求。之后，我们再次调用`axios`时，始终使用的是同一个`axios`实例。
+
+### 其他API
+
+#### axios.all()——并行发送请求
+
+很简单，就是`Promise.all()`方法的封装，当全部请求`resolved`后，会`resolved`掉该`promise`实例，有一个`reject`掉就会`reject`掉该`promise`实例(具体请自行学习`ES6 Promise`)：
+
+```js
+axios.all = function all(promises) {
+    return Promise.all(promises);
+};
+```
+
+#### axios.spread()——用于将请求发散
+
+该函数只要用于数组的解构，将数组形式参数转换为单个的：
+
+```js
+function spread(callback) {
+    return function wrap(arr) {
+        return callback.apply(null, arr);
+    };
+};
+```
+
+举个例子：
+
+```js
+axios.all([axios.get('https://getman.cn/echo'), axios.get('https://getman.cn/echo')])
+    .then(axios.spread(
+        function (response1, response2) {
+        // Both requests are now complete
+    }));
+```
