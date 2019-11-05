@@ -32,11 +32,11 @@ module.exports = function mergeConfig(config1, config2) {
         if (utils.isObject(config2[prop])) {
             config[prop] = utils.deepMerge(config1[prop], config2[prop]);
 
-        // 只要用户定义的该属性值存在，则添加至最终配置对象上
+            // 只要用户定义的该属性值存在，则添加至最终配置对象上
         } else if (typeof config2[prop] !== 'undefined') {
             config[prop] = config2[prop];
 
-        // 剩余情况则是用户未自定义属性时，则使用默认配置
+            // 剩余情况则是用户未自定义属性时，则使用默认配置
         } else if (utils.isObject(config1[prop])) {
             config[prop] = utils.deepMerge(config1[prop]);
         } else if (typeof config1[prop] !== 'undefined') {

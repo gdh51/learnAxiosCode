@@ -91,3 +91,19 @@ axios.all([axios.get('https://getman.cn/echo'), axios.get('https://getman.cn/ech
         // Both requests are now complete
     }));
 ```
+
+#### axios.create()——新建一个自定义配置的axios
+
+可以用该函数创建一个自定义默认配置的`axios`请求函数，具体函数为下：
+
+```js
+axios.create = function create(instanceConfig) {
+    return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+```
+
+这里其中的`axios.defaults`是在最初调用`createInstance()`方法时，继承`Axios`实例上的，即自带的一份系统配置。
+
+在我们使用`axios.create()`方法后，会调用`mergeConfig()`来合并用户自定义的配置和默认配置，优先选取用户配置。
+
+但这么做也有个缺点，就是会缺少一些实例方法，如`all()`、`spread()`。
