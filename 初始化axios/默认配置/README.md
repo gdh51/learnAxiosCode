@@ -1,7 +1,5 @@
 # defaultConfig——默认配置
 
-源码文件来源于[source code defaults](../../axios/lib/defaults.js)
-
 在默认配置中包含一些对请求和响应初步处理的函数，还有对发送请求环境的检测以及对`HTTP Methods`的初步处理，具体为：
 
 ```js
@@ -31,6 +29,7 @@ var defaults = {
         }
 
         // 传入URLSearchParams时，转换为ASCII编码字符串
+        // 很抱歉浏览器不支持该类
         if (utils.isURLSearchParams(data)) {
             setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
             return data.toString();
@@ -75,6 +74,8 @@ var defaults = {
     }
 };
 ```
+
+## getDefaultAdapter()——获取调度请求的适配器
 
 其中`getDefaultAdapter()`方法用于检查当前运行环境适合使用的发送`http`请求的方式：
 
@@ -129,4 +130,4 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 });
 ```
 
-到此为至默认的配置就设置完成了。
+到此为至默认的配置就设置完成了。[对应源码文件-defaults.js](../../axios/lib/defaults.js)

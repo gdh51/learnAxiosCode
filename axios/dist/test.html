@@ -11,10 +11,11 @@
 
 <body>
     <script>
-        axios.all([axios.get('https://getman.cn/echo'), axios.get('https://getman.cn/echo')]).then(axios.spread(
-            function (response1, response2) {
-            // Both requests are now complete
-            }));
+    axios.get('https://getman.cn/echo', {
+        transformRequest: [function anoymon () {
+
+        }]
+    })
     </script>
 </body>
 

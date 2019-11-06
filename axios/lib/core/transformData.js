@@ -11,10 +11,9 @@ var utils = require('./../utils');
  * @returns {*} The resulting transformed data
  */
 module.exports = function transformData(data, headers, fns) {
-  /*eslint no-param-reassign:0*/
-  utils.forEach(fns, function transform(fn) {
-    data = fn(data, headers);
-  });
+    utils.forEach(fns, function transform(fn) {
+        data = fn(data, headers);
+    });
 
-  return data;
+    return data;
 };

@@ -1,4 +1,5 @@
 # 基于Promise封装的XHR对象
+
 在浏览器环境下，`axios`适配器采用的是`XHR`对象，对其各种事件都有处理，对部分事件还暴露出了接口；对于请求和响应的报文头信息都有转换。该函数返回一个`Promise`对象，会在响应成功时`resolve()`掉。
 
 ```js
@@ -119,7 +120,7 @@ function xhrAdapter(config) {
             var cookies = require('./../helpers/cookies');
 
             // Add xsrf header
-            // 跨域时，添加xsrf头
+            // 跨域时且具有xsrf凭证时，添加xsrf头
             var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
                 cookies.read(config.xsrfCookieName) :
                 undefined;
@@ -202,7 +203,7 @@ function xhrAdapter(config) {
 };
 ```
 
-顺带一提其中的cookie，是一个接口对象，里面存放着对浏览器cookie操作的接口方法：
+顺带一提其中的`cookie`，是一个接口对象，里面存放着对浏览器`cookie`操作的接口方法：
 
 ```js
 cookie = {
